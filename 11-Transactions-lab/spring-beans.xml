@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p" xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:util="http://www.springframework.org/schema/util" xmlns:aop="http://www.springframework.org/schema/aop"
+    xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+    <!-- Register the annotations configuration post processors -->
+    <context:annotation-config />
+    <!-- Have Spring pickup stereotype annotated classes and create beans -->
+    <context:component-scan base-package="com.intertech.service, com.intertech.dao, com.intertech.tests" />
+    <!-- Enable proxying for aspects -->
+    <aop:aspectj-autoproxy />
+    <!-- Enable load time weaving (requires the '-javaagent' JVM flag to point at instrumentation jar, or using the 'weaver-class'
+        attribute and making sure the instrumentation library is in the path) -->
+    <context:load-time-weaver weaver-class="org.springframework.instrument.InstrumentationSavingAgent" />
+
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="location" value="classpath:resources/jdbc.properties" />
+    </bean>
+
+    <!-- MySQL Data Source -->
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close" p:driverClassName="${jdbc.driverClassName}"
+        p:url="${jdbc.url}" p:username="${jdbc.username}" p:password="${jdbc.password}" p:maxActive="-1" p:maxIdle="-1"
+        p:maxWait="-1" />
+
+    <bean class="com.intertech.service.ContactAddedListener" p:useSwingAlert="true" />
+
+</beans>
