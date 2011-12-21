@@ -1,0 +1,120 @@
+  ========================================================================
+
+  Copyright (c) 2011 Interbit T & C - all rights reserved
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+
+  ========================================================================
+
+  Original labs by Intertech for course number INT2440. Adapted to MySQL
+  and refactored by Interbit T.N.Silverman
+
+  ========================================================================
+
+  1) About the classpath
+     ===================
+
+  a) All labs contain a 'lib' directory directoy under the root of the project.
+     The jar files in this folder are already in the class path and there is no
+     need to add / remove any additional jar files.
+
+  2) Before you run the labs
+     =======================
+
+  a) Make sure MySQL server 5.1 or higher is installed and that the 'bin'
+     directory is in the system path and that you have root access to the
+     database.
+
+     To test the existence of mysql open a command line and type at the prompt:
+
+     root@laptop:/home/tnsilver/# mysql -u root
+
+     This should start a mysqlk session. To end it type 'quit' or 'exit' at
+     the mysql prompt.
+
+     If you get a message about the command 'mysql' not being recognized - you
+     do not have mysql installed correctly or the 'bin' directory is not in the
+     system path,
+
+  b) Almost all labs require that you run an SQL script (/sql/setup.sql) prior to
+     attempting to run the lab application.
+
+     You can install (run) the script in two ways, one requires that you navigate
+     in a command line console to the 'sql' directory containing the script. login to
+     a mysql session, and issue the respective 'source' command from there. This
+     requires no path information in the command.
+
+     The other way is copying the full path to the setup.sql script
+     and issuing the 'source' command using the full path info.
+
+     In both cases you must login as mysql root user (the default installation user).
+
+     For example:
+     ===========
+
+     To run the script C:\workspaces\spring3\02-BeanWiring-solution\sql\setup.sql
+
+     1. Open a command line console and 'cd' to C:\workspaces\spring3\02-BeanWiring-solution\sql
+     2. login to mysql: mysql -u root
+     3. Issue the 'source' command: source setup.sql
+
+     Or:
+
+     1. login to mysql: mysql -u root
+     2. Issue the 'source' command: source C:\workspaces\spring3\02-BeanWiring-solution\sql\setup.sql
+
+     The setup.sql script
+     ====================
+
+     The setup.sql script creates a mysql user named 'intertech' which is identified
+     by the password 'intertech'. The script also creates a database named 'intertech'.
+     The database url is therefor jdbc:mysql://localhost:3306/intertech.
+
+     To login to mysql and view tables in the intertech schema you can use two approaches:
+
+     1) login as root and use the 'intertech' database:
+
+        a) login using the 'mysql' command:
+
+           root@laptop:/home/tnsilver/# mysql -u root
+
+        b) Tell mysql to switch database (don't forget the ';' semi-colon at the end):
+
+           use intertech;
+
+        c) Then you can issue the command:
+
+           show tables;
+
+           to view existing relations. At this stage, you can issue any
+           valid SQL 9.2 statement:
+
+           select * from contact
+           desc contact;
+
+           and etc...
+
+     2) login as user 'intertech' to the 'intertech' database (and
+        provide the 'intertech' password), in which case you will not need to
+        change the database.
+
+        a) To login as intertech issue the following command
+
+           root@laptop:/home/tnsilver/# mysql -u intertech -p intertech
+
+           Notice - this is a command asking mysql to login as user (-u) intertech,
+           using the password protocol (-p) to database 'intertech'. The command
+           does not provide the password. You'll need to supply the password
+           at the prompt for it.
+
+        b) After you provide the password - you can issue any valid sql 9.2 statement
